@@ -37,7 +37,7 @@ class CalculatorTest {
     @Test
     @DisplayName("測試 2 + 1 = 3")
     void testIntegerSum_WhenTwoPlusOne_ShouldReturnThree() {
-        int result = calculator.sum(2, 1);
+        int result = calculator.integerSum(2, 1);
         assertEquals(result, 3);
     }
 
@@ -46,5 +46,23 @@ class CalculatorTest {
     void testIntegerSub_When() {
         int result = calculator.integerSubtraction(2022, 1911);
         assertEquals(result, 111);
+    }
+
+    @Test
+    @DisplayName("測試除0會噴掉")
+    void testIntegerDivide_WhenOneDivideBy0_ShouldThrowArithmeticException() {
+        //arrange
+        int dividend = 1;
+        int divisor =  0;
+        String expectedExceptionMessage = "/ by zero";
+
+        // act & assert
+        //第一個參數放噴錯的類別,第二個為Executable,第三個是可選的訊息（當assert fail時會執行）
+        ArithmeticException actualException = assertThrows(ArithmeticException.class, () -> {
+            // act
+            calculator.integerDivide(dividend, divisor);
+        }, "沒噴錯");
+            // assert
+        assertEquals(expectedExceptionMessage,actualException.getMessage(),"Unexpected error message");
     }
 }
